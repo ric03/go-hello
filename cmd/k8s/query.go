@@ -4,9 +4,6 @@ import (
 	"context"
 	"flag"
 	"fmt"
-	"github.com/go-git/go-git/v5"
-	gitConfig "github.com/go-git/go-git/v5/config"
-	"github.com/go-git/go-git/v5/storage/memory"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/tools/clientcmd"
@@ -60,11 +57,6 @@ func main() {
 			}
 		}
 	}
-
-	git.NewRemote(memory.NewStorage(), &gitConfig.RemoteConfig{
-		Name: "not-set",
-		URLs: []string{""},
-	})
 
 	//for {
 	//	pods, err := clientset.CoreV1().Pods("").List(context.TODO(), metav1.ListOptions{})

@@ -27,7 +27,6 @@ func main() {
 	for _, release := range releases {
 
 		spec := helmclient.ChartSpec{
-			Namespace:   "playground",
 			ReleaseName: release.Name,
 			DryRun:      true,
 		}
