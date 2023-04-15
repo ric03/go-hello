@@ -1,0 +1,41 @@
+image: golang:latest
+
+stages:
+  - test
+  - build
+  - deploy
+
+format:
+  stage: test
+  script:
+    - |
+      go fmt ./...
+      if [[ -n "$(git status --porcelain)" ]]; then
+        echo >&2 "ERROR: Generated files are inconsistent. Run 'make generate' and 'make protobuf' locally and then commit the updated files."
+        git >&2 status --porcelain
+        exit 1
+      fi
+    - |
+      go mod tidy
+      if [[ -n "$(git status --porcelain)" ]]; then
+        echo >&2 "ERROR: go.mod/go.sum are not up-to-date. Run 'go mod tidy' and then commit the updated files."
+        exit 1
+      fi
+
+
+    #- go vet $(go list ./... | grep -v /vendor/)
+    #- go test -race $(go list ./... | grep -v /vendor/)
+
+compile:
+  stage: build
+  script:
+    - mkdir -p mybinaries
+    - go build -o mybinaries ./...
+  artifacts:
+    paths:
+      - mybinaries
+
+deploy:
+  stage: deploy
+  script: echo "Define your deployment script!"
+  environment: production
