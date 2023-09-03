@@ -85,3 +85,63 @@ func main() {
 	//	time.Sleep(10 * time.Second)
 	//}
 }
+
+func GetDeploymentStatus(clientset *kubernetes.Clientset) {
+	/**
+	Options:
+	1. check if ready pods are 'equal'
+
+		➜  k8s-nginx k get deploy
+		NAME                      READY   UP-TO-DATE   AVAILABLE   AGE
+		nginx-healthy-k8s-nginx   1/1     1            1           3s
+		nginx-k8s-nginx           0/5     3            0           45m
+
+	2. check status
+
+		HEALTHY DEPLOYMENT:
+
+			status:
+			  availableReplicas: 1
+			  conditions:
+			  - lastTransitionTime: "2023-09-03T22:13:00Z"
+				lastUpdateTime: "2023-09-03T22:13:00Z"
+				message: Deployment has minimum availability.
+				reason: MinimumReplicasAvailable
+				status: "True"
+				type: Available
+			  - lastTransitionTime: "2023-09-03T22:12:59Z"
+				lastUpdateTime: "2023-09-03T22:13:00Z"
+				message: ReplicaSet "nginx-healthy-k8s-nginx-6bcdf86479" has successfully progressed.
+				reason: NewReplicaSetAvailable
+				status: "True"
+				type: Progressing
+			  observedGeneration: 1
+			  readyReplicas: 1
+			  replicas: 1
+			  updatedReplicas: 1
+
+
+
+		UNHEALTHY DEPLOYMENT
+
+			status:
+			  conditions:
+			  - lastTransitionTime: "2023-09-03T22:08:53Z"
+				lastUpdateTime: "2023-09-03T22:08:53Z"
+				message: Deployment does not have minimum availability.
+				reason: MinimumReplicasUnavailable
+				status: "False"
+				type: Available
+			  - lastTransitionTime: "2023-09-03T21:27:04Z"
+				lastUpdateTime: "2023-09-03T22:13:32Z"
+				message: ReplicaSet "nginx-k8s-nginx-5999446c89" is progressing.
+				reason: ReplicaSetUpdated
+				status: "True"
+				type: Progressing
+			  observedGeneration: 7
+			  replicas: 7
+			  unavailableReplicas: 7
+			  updatedReplicas: 3
+
+	*/
+}
